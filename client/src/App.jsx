@@ -1,14 +1,13 @@
-import React from 'react';
-import './App.css'
+import React from "react";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/routes.jsx";
 
 function App() {
-
-
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  )
+    <main>
+      <RouterProvider router={router} />
+    </main>
+  );
 }
 
-export default App
+export default App;

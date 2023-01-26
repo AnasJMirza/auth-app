@@ -6,9 +6,9 @@ import { toast } from "react-hot-toast";
 
 
 export async function usernameValidate(values){
-    const errors = usernameVerify({}, values); // formik automatically send form values to this function thats why i created another function to get error messages to show user on screen
+    const error = usernameVerify({}, values); // formik automatically send form values to this function thats why i created another function to get error messages to show user on screen
 
-    return errors;
+    return error;
 }
 
 export const passwordValidate = (values) => {
@@ -26,6 +26,14 @@ export const resetPasswordValidate = (values) => {
     return error;
 }
 
+export const registerValidation = (values) => {
+    const error = usernameVerify({}, values);
+    passwordVarify(error, values);
+    emailVarify(error, values);
+
+    return error;
+
+}
 
 // ***************************************************
 
@@ -45,9 +53,6 @@ function usernameVerify(error = {}, values){
 
 
 
-
-
-
 const passwordVarify = (error = {}, values) => {
     
     const specialChar = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -55,11 +60,26 @@ const passwordVarify = (error = {}, values) => {
     if (!values.password) {
         error.password = toast.error('Password Required!');
     } else if (values.password.includes(' ')) {
-        error.password = toast.error('Invalid Password!');
+        error.password = toast.error('Wrong Password!');
     } else if (values.password.length < 4) {
         error.password = toast.error('Password must be more then 4 characters long!');
     } else if (!specialChar.test(values.password)) {
         error.password = toast.error('Password must contain a special character!');
+    }
+
+    return error;
+}
+
+
+const emailVarify = (error = {}, values) => {
+    const specialChar = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+    if (!values.email) {
+        error.email = toast.error('Email Required!');
+    } else if (values.email.includes(' ')) {
+        error.email = toast.error('Wrong email!');
+    } else if (!specialChar.test(values.email)) {
+        error.password = toast.error('Invalid Email Address');
     }
 
     return error;

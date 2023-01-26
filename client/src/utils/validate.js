@@ -35,6 +35,11 @@ export const registerValidation = (values) => {
 
 }
 
+export const profileValidation = (values) => {
+    const error = emailVarify({}, values);
+    return error;
+}
+
 // ***************************************************
 
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import { registerValidation } from "../utils/validate";
+import { profileValidation } from "../utils/validate";
 import convertToBase64 from "../utils/convert";
 
 import profilePrview from "../assets/profile.png";
@@ -16,12 +16,14 @@ const UserProfile = () => {
 
   const formik = useFormik({
     initialValues: {
+      firstName: "",
+      lastName: "",
+      mobileNumber: "",
       email: "",
-      userName: "",
-      password: "",
+      address: "",
     },
 
-    validate: registerValidation,
+    validate: profileValidation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {

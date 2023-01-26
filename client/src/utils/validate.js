@@ -2,14 +2,37 @@ import { toast } from "react-hot-toast";
 
 
 
-/** validate login page username */
+// Validations
+
+
 export async function usernameValidate(values){
     const errors = usernameVerify({}, values); // formik automatically send form values to this function thats why i created another function to get error messages to show user on screen
 
     return errors;
 }
 
-/** validate username */
+export const passwordValidate = (values) => {
+    const error = passwordVarify({}, values);
+    return error;
+}
+
+export const resetPasswordValidate = (values) => {
+    const error = passwordVarify({}, values);
+
+    if(values.password !== values.confirmPassword) {
+        error.exist = toast.error('Password not match!');
+    }
+    
+    return error;
+}
+
+
+// ***************************************************
+
+
+/** verifications */
+
+
 function usernameVerify(error = {}, values){
     if(!values.userName){
         error.userName = toast.error('Username Required...!');
@@ -20,13 +43,10 @@ function usernameVerify(error = {}, values){
     return error;
 }
 
-// ***************************************************
 
 
-export const passwordValidate = (values) => {
-    const error = passwordVarify({}, values);
-    return error;
-}
+
+
 
 const passwordVarify = (error = {}, values) => {
     

@@ -1,11 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Toaster } from 'react-hot-toast';
+import { useFormik } from 'formik';
+import { usernameValidate } from "../helper/validate";
+
 import profilePrview from "../assets/profile.png";
 import styles from "../styles/UserName.module.css";
 
 const UserName = () => {
+
+    const formik = useFormik({
+        initialValues: {
+            userName: '',
+        },
+
+        validate: usernameValidate,
+        validateOnBlur: false,
+        validateOnChange: false,
+        onSubmit: async (values) => {
+            console.log(values.userName);
+        }
+    })
+
+
   return (
     <div className="container  mx-auto">
+
+        <Toaster position="top-center" reverseOrder={false}></Toaster>
 
       <div className="flex justify-center items-center h-screen">
 
@@ -18,7 +39,7 @@ const UserName = () => {
             </span>
           </div>
 
-          <form className="form">
+          <form className="form" onSubmit={formik.handleSubmit}>
 
             <div className="profile flex justify-center pt-2 pb-4">
               <img
@@ -33,10 +54,11 @@ const UserName = () => {
                 className={styles.textbox}
                 type="text"
                 placeholder="username"
+                {...formik.getFieldProps('userName')}
               />
-              <div className={'border bg-indigo-500 hover:bg-[#ff6a6a] w-3/4 py-2 rounded-lg text-gray-50 text-xl shadow-sm text-center cursor-pointer'} type="submit">
+              <button className={'border bg-indigo-500 hover:bg-[#ff6a6a] w-3/4 py-2 rounded-lg text-gray-50 text-xl shadow-sm text-center cursor-pointer'} type="submit">
                 Let's go!
-              </div>
+              </button>
             </div>
 
             <div className="text-center py-4">

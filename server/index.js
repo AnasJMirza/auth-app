@@ -1,9 +1,11 @@
 import express from 'express';
+import * as dotenv from 'dotenv';
 import cors from 'cors';
+import { connectDB } from './database/connection.js'
 
 
+dotenv.config();
 const app = express();
-
 
 // Middlewares
 app.use(express.json())  // to parse the data from post requests
@@ -16,6 +18,16 @@ app.get('/', (req, res) => res.send('Hello from Auth!'));
 
 
 
-const port = 8080 || process.env.port;
 
-app.listen(port, console.log('Server started...'));
+
+// Connect DB and start server
+const port = 8080 || process.env.port;
+const startServer = async () => {
+    try {
+        await connectDB(process.env.MONGO_URL);
+        app.listen(port, console.log(`Server Started! http://localhost:${port}/`));
+    } catch (error) {
+        console.log(error);
+    }
+}
+startServer();

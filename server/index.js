@@ -1,6 +1,8 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
+import userRoutes from './routes/user.js';
+import authRoutes from './routes/auth.js';
 import { connectDB } from './database/connection.js'
 
 
@@ -15,6 +17,11 @@ app.disable('x-powered-by'); // less hackers know about our stack
 
 // GET Post
 app.get('/', (req, res) => res.send('Hello from Auth!'));
+
+
+// API Routes
+app.use('/api/user', userRoutes);
+app.use('/api/auth', authRoutes);
 
 
 

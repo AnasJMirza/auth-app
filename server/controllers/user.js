@@ -59,4 +59,25 @@ export const getUser = async (req, res) => {
     } catch (error) {
         res.status(404).send({ success: false, message: error.message })
     }
+};
+
+
+export const updateUser = async (req, res) => {
+    try {
+        
+        const id = req.query.id;
+        
+        if(!id) res.status(401).send({ success: false, message: 'invalid userid' });
+
+        const body = req.body;
+        const isUpdated = await User.updateOne({ _id: id }, body);
+
+        if(!isUpdated) res.status(401).send({ success: false, message: "Can't update user!" });
+        res.status(200).send({ success: true, message: 'user updated successfully!' });
+
+
+
+    } catch (error) {
+        res.status(401).send({ success: false, message: error.message });
+    }
 }

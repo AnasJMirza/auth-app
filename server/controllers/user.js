@@ -65,12 +65,13 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     try {
         
-        const id = req.query.id;
         
-        if(!id) res.status(401).send({ success: false, message: 'invalid userid' });
+        const { userId } = req.user;
+        
+        if(!userId) res.status(401).send({ success: false, message: 'invalid userid' });
 
         const body = req.body;
-        const isUpdated = await User.updateOne({ _id: id }, body);
+        const isUpdated = await User.updateOne({ _id: userId }, body);
 
         if(!isUpdated) res.status(401).send({ success: false, message: "Can't update user!" });
         res.status(200).send({ success: true, message: 'user updated successfully!' });

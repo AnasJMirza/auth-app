@@ -1,5 +1,6 @@
 import express from 'express';
 import { registerUser, getUser, updateUser } from '../controllers/user.js';
+import { Auth } from '../middlewares/auth.js';
 
 
 const router = express.Router();
@@ -14,7 +15,7 @@ router.get('/getuser/:userName', getUser)
 
 
 // PUT routes
-router.put('/updateuser', updateUser)
+router.put('/updateuser', Auth, updateUser)
 
 
 

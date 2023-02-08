@@ -38,4 +38,25 @@ export const registerUser = async (req, res) => {
         res.status(500).send({success: false, messgae: error});
     }
     
+};
+
+
+export const getUser = async (req, res) => {
+    try {
+        
+        const { userName } = req.params;
+        const user = await User.findOne({ userName });
+        if(!user){
+            res.status(404).send({ success: false, message: 'username does not exist!' })    
+        }
+
+        const { password, ...rest } = Object.assign({}, user.toJSON());
+
+        res.status(200).send(rest);
+
+
+
+    } catch (error) {
+        res.status(404).send({ success: false, message: error.message })
+    }
 }

@@ -11,11 +11,11 @@ router.post('/register', registerUser);
 
 
 // GET routes
-router.get('/getuser/:userName', getUser)
+router.get('/getuser/:userName', getUser);
 
 
 // PUT routes
-router.put('/updateuser', Auth, updateUser)
+router.put('/updateuser', Auth, updateUser);
 
 
 

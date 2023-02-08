@@ -81,4 +81,32 @@ export const updateUser = async (req, res) => {
     } catch (error) {
         res.status(401).send({ success: false, message: error.message });
     }
+};
+
+
+export const resetPassword = async (req, res) => {
+
+    if(!req.app.locals.resetSession) return res.status(500).send({ success: false, message: 'Session Expired!' });
+
+    const { userName, password } = req.body;
+
+    try {
+        
+        const user = await User.findOne({ userName });
+
+        if(!user) return res.status(500).send({ success: false, message: 'username does not exist!' });
+
+        const hashPassword = await bcrypt.hash(password, 10);
+        if(!hashPassword) return res.status(500).json({ success: false, message: 'unable to hash password!' })
+
+        User.updateOne({ userName: user.userName }, { password: hashPassword });
+        req.app.locals.resetSession = false;
+        
+        return res.status(200).json({ success: true, message: 'Password Updated!' })
+        
+
+
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message })
+    }
 }

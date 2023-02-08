@@ -36,4 +36,16 @@ export const verifyOTP = async (req, res) => {
     } catch (error) {
         res.status(500).send({ success: false, message: error.message })
     }
+};
+
+
+export const resetSession = (req, res) => {
+    if(req.app.locals.resetSession) {
+        req.app.locals.resetSession = false;
+        return res.status(201).send({ success: true, message: 'Access Granted!' });
+    }
+
+    return res.status(440).send({ success: false, message: 'Session Expired!' });
 }
+
+

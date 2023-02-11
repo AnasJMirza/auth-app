@@ -8,6 +8,7 @@ const router = express.Router();
 
 // POST routes
 router.post('/login', verifyUser, loginUser);
+router.post('/authenticate', verifyUser, (req, res) => res.end());
 
 
 export default router;

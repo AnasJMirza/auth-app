@@ -4,6 +4,7 @@ import cors from 'cors';
 import userRoutes from './routes/user.js';
 import authRoutes from './routes/auth.js';
 import OTPRoutes from './routes/otp.js';
+import mailRoutes from './routes/mailer.js';
 import { connectDB } from './database/connection.js'
 
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => res.send('Hello from Auth!'));
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/otp', OTPRoutes);
+app.use('/api/mail', mailRoutes);
 
 
 

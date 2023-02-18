@@ -10,3 +10,12 @@ export const authenticate = async (userName) => {
         return { error: 'User does not exist!'};
     }
 }
+
+
+export const getUser = async (userName) => {
+    try {
+        return await axios.get(`/api/user/getuser/${userName}`)
+    } catch (error) {
+        return { error: 'Can"t fetch user!'};
+    }
+}

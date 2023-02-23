@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { profileValidation } from "../utils/validate";
 import convertToBase64 from "../utils/convert";
-
+import { useAuthStore } from "../store/store";
+import axios from "axios";
 import profilePrview from "../assets/profile.png";
 import styles from "../styles/UserName.module.css";
 import extend from "../styles/Profile.module.css";
@@ -14,15 +15,30 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState("");
 
+
+  
+  const { userName } = useAuthStore(state => state.auth);
+  const [user, setUser] = useState({});
+
+  // useEffect to get data of the user 
+
+  useEffect(() => {
+    const fetchUser = async () => {
+        const result = await axios.get(`/api/user/getuser/${userName}`)
+        setUser(result.data);
+    }
+    fetchUser();
+  }, [])
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
       lastName: "",
       mobileNumber: "",
-      email: "",
+      email: user?.email || "",
       address: "",
     },
-
+    enableReinitialize: true,
     validate: profileValidation,
     validateOnBlur: false,
     validateOnChange: false,
@@ -56,7 +72,7 @@ const UserProfile = () => {
             <div className="profile flex justify-center pt-0 pb-4">
               <label htmlFor="profile">
                 <img
-                  src={file || profilePrview}
+                  src={user?.profile || file || profilePrview}
                   alt="profile"
                   className={`${styles.profile_img} ${extend.profile_img}`}
                 />

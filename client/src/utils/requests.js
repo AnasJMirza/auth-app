@@ -24,12 +24,24 @@ export const getUser = async (userName) => {
 export const verifyPassword = async (userName, password) => {
     try {
         if(userName){
-            const response = await axios.post('/api/auth/login', {userName, password})
-            return response.data;
+            const response = await axios.post('/api/auth/login', {userName, password});
+            return response;
         }
         
     } catch (error) {
         console.log('error in varify password');
         return { error: 'password not matched!'}
+    }
+}
+
+
+export const registerUser = async (credentials) => {
+    try {
+        const response = await axios.post('/api/user/register', credentials);
+        if(status === 200) {
+            return response;
+        }
+    } catch (error) {
+        return { error: 'Somethin went wrong'};
     }
 }

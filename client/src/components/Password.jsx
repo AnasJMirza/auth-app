@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import { passwordValidate } from "../utils/validate";
@@ -37,9 +37,10 @@ const Password = () => {
         validateOnBlur: false,
         validateOnChange: false,
         onSubmit: async (values) => {
-          const { token } = await verifyPassword(userName, values.password)
-          localStorage.setItem('token', token)
-            navigate('/user-profile');
+          const response = await verifyPassword(userName, values.password);
+          const { token } = response.data;
+          localStorage.setItem('token', token);
+          navigate('/user-profile');
         }
     })
 

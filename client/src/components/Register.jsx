@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Toaster } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import { registerValidation } from "../utils/validate";
@@ -8,6 +8,7 @@ import convertToBase64 from "../utils/convert";
 
 import profilePrview from "../assets/profile.png";
 import styles from "../styles/UserName.module.css";
+import { registerUser } from "../utils/requests";
 
 const Register = () => {
 
@@ -25,7 +26,8 @@ const Register = () => {
         validateOnBlur: false,
         validateOnChange: false,
         onSubmit: async (values) => {
-            values = Object.assign(values, { profile: file || ''})
+            values = Object.assign(values, { profile: file || ''});
+            await registerUser(values);
             navigate('/')
         }
     })

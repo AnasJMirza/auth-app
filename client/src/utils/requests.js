@@ -19,3 +19,17 @@ export const getUser = async (userName) => {
         return { error: 'Can"t fetch user!'};
     }
 }
+
+
+export const verifyPassword = async (userName, password) => {
+    try {
+        if(userName){
+            const response = await axios.post('/api/auth/login', {userName, password})
+            return response.data;
+        }
+        
+    } catch (error) {
+        console.log('error in varify password');
+        return { error: 'password not matched!'}
+    }
+}

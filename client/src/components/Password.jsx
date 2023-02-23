@@ -8,7 +8,7 @@ import { passwordValidate } from "../utils/validate";
 import profilePrview from "../assets/profile.png";
 import styles from "../styles/UserName.module.css";
 import axios from "axios";
-import { getUser } from "../utils/requests";
+import { verifyPassword } from "../utils/requests";
 import { useAuthStore } from "../store/store";
 
 const Password = () => {
@@ -21,10 +21,8 @@ const Password = () => {
 
     useEffect(() => {
       const fetchUser = async () => {
-          // setUser(getUser(userName))
           const result = await axios.get(`/api/user/getuser/${userName}`)
           setUser(result.data);
-          // console.log(result.data);
       }
       fetchUser();
     }, [])
@@ -39,7 +37,9 @@ const Password = () => {
         validateOnBlur: false,
         validateOnChange: false,
         onSubmit: async (values) => {
-            navigate('/user-profile')
+          const { token } = await verifyPassword(userName, values.password)
+          localStorage.setItem('token', token)
+            navigate('/user-profile');
         }
     })
 

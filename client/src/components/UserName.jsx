@@ -42,7 +42,7 @@ const UserName = () => {
           <div className="title flex flex-col items-center">
             <h4 className="text-3xl font-bold">Hello Again!</h4>
             <span className="py-4 text-md w-3/4 text-center text-gray-500">
-              Explore More by connecting with us.
+              Explore More by connecting with us...
             </span>
           </div>
 
